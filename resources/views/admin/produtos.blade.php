@@ -53,7 +53,7 @@
                     
                     <td>
                       <!--mostra a imagem na tabela-->
-                      <img src="{{url("storage/{$produto->imagem}")}}" class="circle "></td>
+                      <img src="{{url('storage/'.$produto->imagem)}}" class="circle "></td>
 
                     <td>{{$produto->id}}</td>
                     <td>{{$produto->nome}}</td>                    
