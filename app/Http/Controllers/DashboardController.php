@@ -17,31 +17,14 @@ class DashboardController extends Controller
         $id_user =  Auth::id(); //id do user logado
         $produtoTotal = Produto::where("id_user", $id_user)->count();//contar os produtos
 
-        //gráfico 1 - usuários 
-        $usersDados = User::select([
-            DB::raw("YEAR(created_at) as ano"),
-            DB::raw("count(*) as total"),
+        //grafico - categorias
+        $catsDados = Categoria::with("produtos")->get();
+        
+       /*  $catsDados = Categoria::whereHas('produtos', function ($query) use ($id_user) {
+            $query->where('id_user', $id_user);
+        })->with('produtos')->get(); *///pegar a tabela produtos do BD relacionada
 
-        ])->groupBy("ano")->orderBy("ano","asc")->get();
-
-        //preparar arrays
-        $ano = [];
-        $total = [];
-        foreach ($usersDados as $userDado) {
-            $ano[] = $userDado->ano;
-            $total[] = $userDado->total;
-        }
-
-        //formatar para chart js
-        $userLabel = "'Comparativo de cadastro de usuários'";
-        $userAno = implode(",", $ano) ?? null;
-        $userTotal = implode(",", $total) ?? null;
-
-
-        //grafico 2 - categorias
-        $catsDados = Categoria::with("produtos")->get();//pegar a tabela produtos do BD relacionada
-
-        //preparar array para graficos 2
+        //preparar array para graficos 
         $catNome = []; // Inicializa a variável
         $catTotal = []; // Inicializa a variável
         foreach ($catsDados as $catDado) {
@@ -49,12 +32,12 @@ class DashboardController extends Controller
             $catTotal[] = $catDado->produtos->count(); //contar os produtos
         }
 
-        //formatar para chart js do grafico 2
+        //formatar para chart js do grafico 
         $catLabel = implode(",", $catNome);
         $catTotal = implode(",", $catTotal);
 
         if (Auth::check()) { //se estiver logado
-            return view("admin/dashboard", compact("users", "userLabel", "userAno", "userTotal", "catLabel", "catTotal", "produtoTotal"));
+            return view("admin/dashboard", compact("users", "catLabel", "catTotal", "produtoTotal"));
 
         } else {
             return redirect()->route('site.index');

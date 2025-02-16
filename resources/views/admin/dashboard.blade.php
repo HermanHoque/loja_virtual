@@ -9,113 +9,59 @@
 
 
 
-  <div class="row container">
-    <section class="info">
-
-      <div class="col s12 m4">
-      <article class="bg-gradient-green card z-depth-4 ">
-        <i class="material-icons">shopping_bag</i>
-        <p>Seus Produtos</p>
-        <h3>{{ $produtoTotal }}</h3>       
-      </article>
-      </div>
-
-      <!--carde da Qt de usuários-->
-      <div class="col s12 m4">
-        <article class="bg-gradient-blue card z-depth-4 ">
-          <i class="material-icons">face</i>
-          <p>Usuários</p>
-          <h3>{{ $users }} </h3>           
-        </article>
-        </div>
-
-        <div class="col s12 m4">
-          <article class="bg-gradient-orange card z-depth-4 ">
-            <i class="material-icons">shopping_cart</i>
-            <p>Pedidos</p>
-            <h3>0</h3>            
+  <div style="margin-top: 10px">
+      <div class="row container">
+        <section class="info">
+          <div class="col s12 m4">
+          <article class="bg-gradient-green card z-depth-4 ">
+            <i class="material-icons">shopping_bag</i>
+            <p>Seus Produtos</p>
+            <h3>{{ $produtoTotal }}</h3>
           </article>
+            <article class="bg-gradient-orange card z-depth-4 ">
+                <i class="material-icons">shopping_cart</i>
+                <p>Pedidos</p>
+                <h3>0</h3>
+            </article>
+      
           </div>
-
-    </section>        
+        <section class="graficos col s12 m6">
+            <div class="grafico card z-depth-4" style="height: 420px">
+                <h5 class="center"> Categorias </h5>
+            <div style="width:400px; height: 350px; margin: auto;">
+                <canvas id="myChart2"></canvas>
+            </div>
+            </div>
+        </section>
+        </section>
+      </div>
   </div>
 
-
-      <div class="row container ">
-          <section class="graficos col s12 m6" >            
-            <div class="grafico card z-depth-4">
-                <h5 class="center"> Aquisição de usuários</h5>
-                <canvas id="myChart" width="400" height="200"></canvas>
-            </div>           
-          </section> 
-          
-          <section class="graficos col s12 m6">            
-              <div class="grafico card z-depth-4">
-                  <h5 class="center"> Produtos </h5>
-              <canvas id="myChart2" width="400" height="200"></canvas> 
-          </div>            
-         </section>             
-      </div>
-
-   
-
-
-      </div>
 @endsection
 
 
 @push('graficos')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        /* Gráfico 01 */
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [{{ $userAno }}],
-                datasets: [{
-                    label: [{!! $userLabel !!}],
-                    data: [{{ $userTotal }}],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',                         
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',                     
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                borderWidth: 1, 
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
-        /* Gráfico 02 */
+        
+        /* Gráfico */
         var ctx = document.getElementById('myChart2');
         var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: [{!! $catLabel !!}],
                 datasets: [{
-                    label: 'Visitas',
+                    label: 'Quantidade',
                     data: [{{$catTotal}}],
-                    backgroundColor: [
-                        'rgba(255, 99, 132)',
-                        'rgba(54, 162, 235)',                         
-                        'rgba(255, 159, 64)'
-                    ]
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
         });
 
