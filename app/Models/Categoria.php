@@ -11,6 +11,7 @@ class Categoria extends Model
 
     public function produtos()
     {
+        /* relacionamento um para muitos */
         return $this->hasMany(Produto::class, "id_categoria", "id");
     }
 }

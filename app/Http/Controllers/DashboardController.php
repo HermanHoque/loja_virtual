@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
         } else {
             return redirect()->route('site.index');
-       
+        
         }
     }
 }

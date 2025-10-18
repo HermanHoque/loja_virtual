@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     //método para iniciar a sessão
-    public function auth(Request $rqt) {
+    public function auth(Request $rqt) { 
         $credenciais = $rqt->validate([
             "email" => ["required", "email"],
             "password" => ["required"],
@@ -20,7 +20,7 @@ class LoginController extends Controller
         );
 
         //verificar autenticação do user atraves das credenciais
-        if (Auth::attempt($credenciais, $rqt->remember)) { //Se for autenticado
+        if (Auth::attempt($credenciais)) { //Se for autenticado
             
             $rqt->session()->regenerate();//criar um novo id para sessão
             return redirect()->intended("/admin/dashboard");//url da Rota 
