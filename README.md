@@ -1,4 +1,7 @@
-loja virtual
+# Prototipo - loja virtual
+
+Projecto feito com php/laravel, possui as funcionalidades básicas de uma loja virtual 
+
 
 para rodar o projeto deve instalar o composer no terminal,
 se você esta usando o programa Laragon o composer já vem instalado por padrão então é só abrir o terminal do Laragon e digitar os seguintes comandos:
